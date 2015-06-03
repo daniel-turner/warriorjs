@@ -1,59 +1,134 @@
 class Player {
 
+  _health;
+
+  constructor() {
+
+    this._health = 20;
+  };
+
+  get _health() {
+
+    return this._health;
+  };
+
+  set _health(health) {
+
+    this._health = health;
+  };
+
   playTurn(warrior) {
     // Cool code goes here
 
-    if(warrior.feel("backward").isCaptive() ) {
+    var forward = [];
+    var backward = [];
+    var left = [];
+    var right = [];
 
-      warrior.rescue("backward");
+    var look = function() {
 
-    } else {
+      forward = warrior.look();
+      backward = warrior.look("backward");
+      left = warrior.look("left");
+      right = warrior.look("right");
+    };
 
-      if(!warrior.feel().isEmpty()) {
+    var reactFront = function() {
 
-        if(warrior.feel().isCaptive()) {
+      var front = warrior.feel();
+
+      if(!front.isEmpty) {
+
+        if(front.isCaptive()) {
 
           warrior.rescue();
+          return;
+        };
 
-        } else if(warrior.feel().isWall()) {
+        if(front.isWall()) {
 
-          warrior.pivot();
+          evaluateDirection();
+        }
 
-        } else {
+        if(front.isEnemy()) {
 
           warrior.attack();
-
+          return;
         }
+
+      }
+
+      evaluateDirection;
+
+    };
+
+    var evaluateDirection = function() {
+
+      var priorityDirection = "";
+      var lowestRange = 4;
+
+    };
+
+    var moveForward = function() {
+
+      if(warrior.feel("backward").isCaptive() ) {
+
+        warrior.rescue("backward");
 
       } else {
 
-        if(warrior.health() < 20) {
+        if(!warrior.feel().isEmpty()) {
 
-          if(warrior.health() < this._health) {
+          if(warrior.feel().isCaptive()) {
 
-            if(warrior.health() < 15) {
+            warrior.rescue();
 
-              warrior.walk("backward");
+          } else if(warrior.feel().isWall()) {
 
-            } else {
-
-              warrior.walk();
-            }
+            warrior.pivot();
 
           } else {
 
-            warrior.rest();
+            warrior.attack();
+
           }
 
         } else {
 
-          warrior.walk();
+          if(warrior.health() < 19) {
+
+            if(warrior.health() < this._health) {
+
+              if(warrior.health() < 15) {
+
+                warrior.walk("backward");
+
+              } else {
+
+                warrior.walk();
+              }
+
+            } else {
+
+              warrior.rest();
+            }
+
+          } else {
+
+            warrior.walk();
+          }
         }
       }
+
+
+      this._health = warrior.health();
     }
 
+    look();
 
-    this._health = warrior.health();
+    reactFront();
+
+    moveForward();
   }
 }
 
