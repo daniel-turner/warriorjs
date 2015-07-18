@@ -1,24 +1,19 @@
 class Player {
 
-  _health;
+  // get _health() {
 
-  constructor() {
+  //   return this._health;
+  // };
 
-    this._health = 20;
-  };
+  // set _health(health) {
 
-  get _health() {
-
-    return this._health;
-  };
-
-  set _health(health) {
-
-    this._health = health;
-  };
+  //   this._health = health;
+  // };
 
   playTurn(warrior) {
     // Cool code goes here
+
+    console.log(warrior);
 
     var forward = [];
     var backward = [];
@@ -55,7 +50,6 @@ class Player {
           warrior.attack();
           return;
         }
-
       }
 
       evaluateDirection;
@@ -120,9 +114,10 @@ class Player {
         }
       }
 
-
       this._health = warrior.health();
     }
+
+    console.log(this._health);
 
     look();
 
